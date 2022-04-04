@@ -19,7 +19,7 @@ module.exports = {
         await target.user.fetch();
         
         const response = new MessageEmbed()
-            .setColor(target.user.accentColor || "RANDOM")
+            .setColor(target.user.accentColor || "YELLOW")
             .setAuthor({ name: target.user.tag, iconURL: target.user.avatarURL({dynamic: true})})
             .setThumbnail(target.user.avatarURL({dynamic: true}))
             .setImage(target.user.bannerURL({dynamic: true, size: 512}) || "")

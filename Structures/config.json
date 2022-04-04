@@ -1,4 +1,3 @@
 {
-    "Token": "",
-    "Database": ""
+    "Database": "mongodb+srv://leunel:Valmorix2131@thebasement.kcj9a.mongodb.net/thebasement?retryWrites=true&w=majority"
 }

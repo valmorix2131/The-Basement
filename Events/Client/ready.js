@@ -9,7 +9,7 @@ module.exports = {
      */
     execute(client) {
         console.log("The client is now ready!")
-        client.user.setActivity("Sijey baka makidnap", {type: "WATCHING"})
+        client.user.setActivity(".gg/basemenph", {type: "WATCHING"})
 
         if(!Database) return;
         mongoose.connect(Database, {

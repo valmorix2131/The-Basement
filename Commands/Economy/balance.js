@@ -1,47 +1,32 @@
-const { CommandInteraction, Client, MessageEmbed } = require("discord.js");
-const CurrencySystem = require("currency-system");
-const cs = new CurrencySystem;
-
-const currency = '₱'
-// ${currency}
+const { MessageEmbed } = require("discord.js");
+const eco = require("../../Structures/Handlers/Economy")
 
 module.exports = {
-  name: "balance",
-  usage: "/balance",
-  description: "Check a user's current balance.",
-  options: [
-    {
-      name: 'user',
-      description: "Select a user to view their balance.",
-      type: "USER",
-      required: false
+    name: "balance",
+    description: "Check user balance",
+    userPermissions: ["SEND_MESSAGES"],
+    category: "Economy",
+
+    execute: async (interaction, client, args) => {
+        const {
+            member,
+            guild
+        } = interaction;
+
+        let balance = eco.balance.fetch(member.id, guild.id)
+        let bank = eco.bank.fetch(member.user.id, guild.id)
+
+        if(!balance) balance = 0;
+        if(!bank) bank = 0;
+
+        const embed = new MessageEmbed()
+        .setTitle(`**${member.user.username}**'s balance`)
+        .setDescription(`
+            Cash: **${balance}** coins.
+            Bank: **${bank}** coins.
+        `)
+        .setColor("GREEN")
+
+        interaction.reply({embeds: [embed]})
     }
-  ],
-  /**
-   * 
-   * @param {CommandInteraction} interaction
-   * @param {Client} client
-   */
-  async execute(interaction, client) {
-
-    const target = interaction.options.getUser("user") || interaction.user
-    
-    let balance = await cs.balance({
-      user: target,
-      guild: interaction.guild.id,
-    });
-
-    const balformat = balance.wallet.toLocaleString();
-    const banformat = balance.bank.toLocaleString();
-   
-    const embed = new MessageEmbed()
-    .setColor("GREEN")
-    .setAuthor({ name: `💸 ${target.username}'s Balance`, iconURL: `${target.displayAvatarURL({dynamic: true, size: 512})}`})
-    .addField("💰 Wallet", `${currency}${balformat}`, true)
-    .addField("💳 Bank", `${currency}${banformat}`, true)
-    .setFooter({text: `${client.user.tag}`, iconURL: `${client.user.displayAvatarURL({dynamic: true, size: 512})}`})
-    .setTimestamp();
-
-    interaction.reply({embeds: [embed]})
-  }
 }

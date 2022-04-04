@@ -19,7 +19,7 @@ module.exports = {
     async execute(interaction) {
         const { guild, options, member } = interaction;
         const confessionChannel          = guild.channels.cache.get('950038161298452501');
-        const confessionLogChannel       = guild.channels.cache.get('939483878232584232');
+        const confessionLogChannel       = guild.channels.cache.get('950622046012981268');
         const confessionString           = options.getString('input');
         const confessionId               = (await confessions.countDocuments() + 1).toString();
 
